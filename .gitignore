@@ -1,0 +1,42 @@
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.userprefs
+*.log
+*.bak
+*.cache
+*.obj
+*.pdb
+*.pidb
+*.dll
+*.exe
+*.ilk
+*.metagen
+*.tlb
+*.tlh
+*.tmp
+*.vshost.*
+*.csproj.user
+*.vbproj.user
+*.vcxproj.user
+*.sln.docstates
+
+# Build artifacts
+[Bb]in/
+[Oo]bj/
+
+# NuGet packages
+packages/
+
+# Resharper files
+*.DotSettings
+*.DotSettings.user
+
+# Other common files
+Thumbs.db
+Desktop.ini
+
+# Optional: If you have specific generated files or folders to ignore
+# For example, if you're using a code generation tool
+# GeneratedCode/
