@@ -11,13 +11,19 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="20"/>
-            <RowDefinition />
+            <RowDefinition Height="141*" />
+            <RowDefinition Height="269*"/>
         </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="Workspace" Foreground="White" 
-               Height="20" VerticalAlignment="Top" Panel.ZIndex="1" HorizontalAlignment="Stretch"/>
-            <Button x:Name="fileBrowserBtn" Grid.Row="1" Content="Browse" Width="50" HorizontalAlignment="Center"  Click="fileBrowserBtn_Click"/>
-            <ListView x:Name="dirSummary" Grid.Row="2" Background="DarkSlateBlue" Foreground="White" 
-                      ItemsSource="{Binding WorkspaceFiles}" />
+        <TextBlock Text="Workspace" Foreground="White" 
+               Height="20" VerticalAlignment="Center" Panel.ZIndex="1"/>
+        <Button x:Name="fileBrowserBtn" Grid.Row="1" Content="Browse" Width="50" HorizontalAlignment="Center"  Click="fileBrowserBtn_Click"/>
+        <TreeView Grid.Row="2" Background="Transparent" ItemsSource="{Binding RootItems}" Grid.RowSpan="2">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}" >
+                    <TextBlock Text="{Binding Name}" />
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
     </Grid>
 </UserControl>

@@ -22,25 +22,40 @@ namespace CodingAssistantBox.UserControls.View
     /// <summary>
     /// Interaction logic for Workspace.xaml
     /// </summary>
-    public partial class Workspace : UserControl, INotifyPropertyChanged
+    public partial class Workspace : UserControl
     {
-        private ObservableCollection<string> workspaceFiles;
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        public ObservableCollection<string> WorkspaceFiles
+        public class TreeViewParentItem
         {
-            get { return workspaceFiles; }
+            public string Name { get; set; } = string.Empty;
+            public ObservableCollection<TreeViewParentItem> Children { get; set; }
+
+            public TreeViewParentItem(string filePath, bool isFile)
+            {
+                this.Children = new ObservableCollection<TreeViewParentItem>();
+                if (isFile) Name = System.IO.Path.GetFileName(filePath)!;
+                else
+                {
+                    Name = System.IO.Path.GetFileName(filePath)!;
+                }
+            }
+        }
+
+        private ObservableCollection<TreeViewParentItem> rootItems;
+
+        public ObservableCollection<TreeViewParentItem> RootItems
+        {
+            get { return rootItems; }
             private set 
             { 
-                workspaceFiles = value;
+                rootItems = value;
             }
         }
 
         public Workspace()
         {
             DataContext = this;
-            workspaceFiles = new ObservableCollection<string>();
+            rootItems = new ObservableCollection<TreeViewParentItem>();
             InitializeComponent();
         }
 
@@ -51,13 +66,41 @@ namespace CodingAssistantBox.UserControls.View
             if (success == true)
             {
                 string selectedFolderPath = openFolderDialog.FolderName;
-                
-                string[] files = Directory.GetFiles(selectedFolderPath, "*.*", SearchOption.AllDirectories);
+
+                string[] files = Directory.GetFiles(selectedFolderPath, "*.*", SearchOption.TopDirectoryOnly);
+                string[] folders = Directory.GetDirectories(selectedFolderPath);
+
+                foreach (string folder in folders)
+                {
+                    TreeViewParentItem tree = new TreeViewParentItem(folder, false);
+                    GetFilesInSubDir(folder, ref tree);
+                    RootItems.Add(tree);
+                }
 
                 foreach (string file in files)
-                    WorkspaceFiles.Add(System.IO.Path.GetFileName(file));
-                MessageBox.Show(workspaceFiles.Count.ToString(), "Debug", MessageBoxButton.OK);
+                    RootItems.Add(new TreeViewParentItem(file, true));
             }
+        }
+
+        private void GetFilesInSubDir(string folderPath, ref TreeViewParentItem tree)
+        {
+            string[] files = Directory.GetFiles(folderPath, "*.*", SearchOption.TopDirectoryOnly);
+            string[] folders = Directory.GetDirectories(folderPath);
+
+            foreach (string folder in folders)
+            {
+                TreeViewParentItem subTree2 = new TreeViewParentItem(folder, false);
+                GetFilesInSubDir(folder, ref subTree2);
+                tree.Children.Add(subTree2);
+            }
+
+            foreach (string file in files)
+            {
+                TreeViewParentItem subTree1 = new TreeViewParentItem(file, true);
+                tree.Children.Add(subTree1);
+            }
+
+            return;
         }
     }
 }
