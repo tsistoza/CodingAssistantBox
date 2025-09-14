@@ -131,6 +131,7 @@ namespace CodingAssistantBox
             DialogPanel.Children.Add(border);
         }
 
+        // Event Handlers
         private void userInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (string.IsNullOrEmpty(userInput.Text)) userPlaceholdler.Visibility = Visibility.Visible;

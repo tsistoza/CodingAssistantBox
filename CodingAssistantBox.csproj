@@ -12,8 +12,4 @@
     <PackageReference Include="OllamaSharp" Version="5.4.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UserControl\" />
-  </ItemGroup>
-
 </Project>
