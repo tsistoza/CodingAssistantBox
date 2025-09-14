@@ -19,24 +19,16 @@ namespace CodingAssistantBox
             get { return ollama; }
             private set { ollama = value; } 
         }
-        private async void Application_Startup(object sender, StartupEventArgs e)
+        public Uri? HostLink
+        {
+            get { return uri; }
+            private set { uri = value; }
+        }
+        private void Application_Startup(object sender, StartupEventArgs e)
         {
             uri = new Uri("http://localhost:11434");
             ollama = new OllamaApiClient(uri);
             ollama.SelectedModel = "deepseek-coder:6.7b"; // Default
-
-            using (HttpClient client = new HttpClient())
-            {
-                try
-                {
-                    HttpResponseMessage response = await client.GetAsync(uri);
-                    response.EnsureSuccessStatusCode();
-                } catch
-                {
-                    MessageBox.Show("START OLLAMA, EXITING...", "Error", MessageBoxButton.OK);
-                    Application.Current.Shutdown();
-                }
-            }
         }
     }
 

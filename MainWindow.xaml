@@ -22,9 +22,16 @@
         <Button x:Name="clearDialog" Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" 
                 Content="X" Grid.Row="1" Background="Red" Click="clearDialog_Click"/>
 
-        <TextBlock x:Name="userPlaceholdler" Text="Chat Here..." Margin="30,30,30,30" Grid.Row="2" 
+        <TextBlock x:Name="userPlaceholdler" Text="Model Connecting..." Margin="30,30,30,30" Grid.Row="2" 
                    Foreground="LightGray" Panel.ZIndex="-1"/>
         <TextBox x:Name="userInput" Margin="20,20,20,20" Grid.Row="2" Foreground="White" Background="Transparent" 
                  TextChanged="userInput_TextChanged" CaretBrush="White" PreviewKeyDown="userInput_PreviewKeyDown"/>
+        
+        <Menu Grid.Row="2" Height="15" Background="Transparent" Foreground="White"
+              VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20, 5">
+            <MenuItem Header="Model:" x:Name="ModelSelector"></MenuItem>
+            <MenuItem Header="Connecting..." x:Name="NameModel" />
+        </Menu>
+        
     </Grid>
 </Window>
