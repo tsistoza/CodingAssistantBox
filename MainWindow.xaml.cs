@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.AI;
+using Microsoft.Win32;
 using OllamaSharp;
 using OllamaSharp.Models.Chat;
+using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -27,10 +29,31 @@ namespace CodingAssistantBox
         private List<string> chatHistory = new List<string>();
         private List<OllamaSharp.Models.Model> models = new List<OllamaSharp.Models.Model>();
 
+        public class ContextItem
+        {
+            public string Name { get; set; } = string.Empty;
+            public string FileName { get; set; } = string.Empty;
+            public ContextItem(string fileName)
+            {
+                Name = System.IO.Path.GetFileName(fileName);
+                FileName = fileName;
+            }
+        }
+
+        private ObservableCollection<ContextItem> contextFiles;
+        public ObservableCollection<ContextItem> ContextFiles
+        {
+            get { return contextFiles; }
+            private set { contextFiles = value; }
+        }
+
         public MainWindow()
         {
+            DataContext = this;
             ollama = ((App)Application.Current).Model!;
             uri = ((App)Application.Current).HostLink!;
+            contextFiles = new ObservableCollection<ContextItem>();
+            
             InitializeComponent();
             CheckConnection();
         }
@@ -94,6 +117,7 @@ namespace CodingAssistantBox
 
             return response;
         }
+
 
         private void AppendTextBlock(string text, bool isUser)
         {
@@ -172,6 +196,24 @@ namespace CodingAssistantBox
             var item = (MenuItem)sender;
             ollama.SelectedModel = (string)item.Header;
             NameModel.Header = ollama.SelectedModel;
+        }
+
+        private void contextAdder_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            bool? success = ofd.ShowDialog();
+            if (success == true)
+            {
+                ContextItem menuItem = new ContextItem(ofd.FileName);
+                contextFiles.Add(menuItem);
+            }
+        }
+
+        private void contextDelete_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
+            ContextItem item = (ContextItem)btn.DataContext;
+            contextFiles.Remove(item);
         }
     }
 }

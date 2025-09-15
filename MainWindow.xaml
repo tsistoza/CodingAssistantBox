@@ -10,18 +10,17 @@
         >
     <Grid Background="Black">
         <Grid.RowDefinitions>
-            <RowDefinition Height="15*"/>
+            <RowDefinition Height="10*"/>
             <RowDefinition Height="65*"/>
-            <RowDefinition Height="20*"/>
+            <RowDefinition Height="25*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40*" />
-            <ColumnDefinition Width="71*" />
-            <ColumnDefinition Width="289*"/>
+            <ColumnDefinition Width="15*" />
+            <ColumnDefinition Width="85*" />
         </Grid.ColumnDefinitions>
 
         <!-- Top Row -->
-        <TextBlock Text="Chat" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="30" Foreground="White" Margin="188,0,0,0"/>
+        <TextBlock Text="Chat" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" Foreground="White"/>
 
         <!-- Middle Row -->
         <ScrollViewer Grid.Column="1" x:Name="ScrollDialog" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2" Margin="0,65,0,0" Grid.RowSpan="2" >
@@ -31,16 +30,49 @@
                 Content="X" Background="Red" Click="clearDialog_Click" Margin="0,65,0,0" Grid.RowSpan="2"/>
 
         <!-- Bottom Row -->
-        <TextBlock Grid.Column="1" x:Name="userPlaceholdler" Text="Model Connecting..." Margin="30,30,30,30" Grid.Row="2" 
-                   Foreground="LightGray" Panel.ZIndex="-1" Grid.ColumnSpan="2"/>
-        <TextBox Grid.Column="1" x:Name="userInput" Margin="20,20,20,20" Grid.Row="2" Foreground="White" Background="Transparent" 
-                 TextChanged="userInput_TextChanged" CaretBrush="White" PreviewKeyDown="userInput_PreviewKeyDown" Grid.ColumnSpan="2"/>
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="userPlaceholdler" Text="Model Connecting..." Margin="20, 10, 10, 10" VerticalAlignment="Center"
+                           Foreground="LightGray" Panel.ZIndex="-1" />
+                <TextBox x:Name="userInput" Margin="10,0,10,0" Foreground="White" Background="Transparent"
+                         TextChanged="userInput_TextChanged" CaretBrush="White" PreviewKeyDown="userInput_PreviewKeyDown"/>
 
-        <Menu Grid.Row="2" Grid.Column="1" Height="15" Background="Transparent" Foreground="White"
-              VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,0,0,5" Grid.ColumnSpan="2">
-            <MenuItem Header="Model:" x:Name="ModelSelector"></MenuItem>
-            <MenuItem Header="Connecting..." x:Name="NameModel" />
-        </Menu>
+                <Grid Grid.Row="1" Margin="10, 0, 10, 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Background="DarkSlateBlue" />
+                    <StackPanel Orientation="Horizontal">
+                        <Menu Background="Transparent" Foreground="White" >
+                            <MenuItem Header="Add Context+" Click="contextAdder_Click"/>
+                        </Menu>
+                        <Menu Background="Transparent" Foreground="White" ItemsSource="{Binding ContextFiles}">
+                            <Menu.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}"/>
+                                        <Button Content="X" Background="Transparent" Foreground="White" Click="contextDelete_Click" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </Menu.ItemTemplate>
+                        </Menu>
+                    </StackPanel>
+                </Grid>
+
+                <Menu Grid.Row="2" Background="Transparent" Foreground="White"
+                      VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,5" Grid.ColumnSpan="2">
+                    <MenuItem Header="Model:" x:Name="ModelSelector"></MenuItem>
+                    <MenuItem Header="Connecting..." x:Name="NameModel" />
+                </Menu>
+            </Grid>
+        </Grid>
+        
+        
 
         <!-- Workspace -->
         <view:Workspace Grid.RowSpan="3" />

@@ -28,16 +28,15 @@ namespace CodingAssistantBox.UserControls.View
         public class TreeViewParentItem
         {
             public string Name { get; set; } = string.Empty;
+            public string FileName { get; set; } = string.Empty;
             public ObservableCollection<TreeViewParentItem> Children { get; set; }
 
             public TreeViewParentItem(string filePath, bool isFile)
             {
                 this.Children = new ObservableCollection<TreeViewParentItem>();
                 if (isFile) Name = System.IO.Path.GetFileName(filePath)!;
-                else
-                {
-                    Name = System.IO.Path.GetFileName(filePath)!;
-                }
+                else Name = System.IO.Path.GetFileName(filePath)!;
+                FileName = filePath;
             }
         }
 
@@ -46,10 +45,7 @@ namespace CodingAssistantBox.UserControls.View
         public ObservableCollection<TreeViewParentItem> RootItems
         {
             get { return rootItems; }
-            private set 
-            { 
-                rootItems = value;
-            }
+            private set { rootItems = value; }
         }
 
         public Workspace()
