@@ -3,13 +3,11 @@ This is a Windows Desktop Application. It is essentially a chatbox, it uses the 
 
 ## Instructions
 - Ollama must be installed. [Link](https://ollama.com/)
-- Within Ollama at least one model must be installed
+- Within Ollama at least one model must be installed. You can get models by using CLI ```ollama pull "Model_Name"```. Here are the links to find the models [Link](https://ollama.com/search)
 - You can change the model, by pressing the Model button bottom left, and selecting a model.
 - You can add a workspace, easily add files to the context from the workspace, or use File Dialog by pressing Add Context.
 
-
-
 ## Packages Used
-- [Ollama] 
+- [Ollama](https://ollama.com/)
 - [OllamaSharp](https://github.com/awaescher/OllamaSharp)
 - .NET 9.0

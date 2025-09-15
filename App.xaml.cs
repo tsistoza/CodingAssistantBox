@@ -28,7 +28,6 @@ namespace CodingAssistantBox
         {
             uri = new Uri("http://localhost:11434");
             ollama = new OllamaApiClient(uri);
-            ollama.SelectedModel = "deepseek-coder:6.7b"; // Default
         }
     }
 

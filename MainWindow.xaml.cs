@@ -28,7 +28,7 @@ namespace CodingAssistantBox
         private OllamaApiClient ollama;
         private Uri uri;
         private List<string> chatHistory = new List<string>();
-        private List<OllamaSharp.Models.Model> models = new List<OllamaSharp.Models.Model>();
+        private OllamaSharp.Models.Model? defaultModel = null;
 
         public class ContextItem
         {
@@ -84,6 +84,7 @@ namespace CodingAssistantBox
             // List Models
             foreach (var model in await ollama.ListLocalModelsAsync())
             {
+                if (defaultModel == null) defaultModel = model;
                 MenuItem selector = new MenuItem();
                 selector.Header = model.Name;
                 selector.Click += ModelSelector_Click;
@@ -92,11 +93,13 @@ namespace CodingAssistantBox
             }
 
             // Set Model
+            ollama.SelectedModel = defaultModel!.Name;
             NameModel.Header = ollama.SelectedModel;
         }
 
         private async Task<string> GenerateMessage(string msg)
         {
+            if (ollama.SelectedModel == null) return "Install at least One Model.\n";
             string response = "";
             Chat chat = new Chat(ollama);
             userPlaceholdler.Text = "Generating...";
