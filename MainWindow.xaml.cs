@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -101,11 +102,12 @@ namespace CodingAssistantBox
             userPlaceholdler.Text = "Generating...";
             userInput.Text = null;
             userInput.IsEnabled = false;
-            
+
 
             string context = "";
             foreach (string history in chatHistory)
                 context += history;
+            context += "\n" + ContextToString();
             context += "User: " + msg;
 
             await foreach (var answerToken in chat.SendAsync(context))
@@ -118,6 +120,18 @@ namespace CodingAssistantBox
             return response;
         }
 
+        private string ContextToString()
+        {
+            string context = "Current Files: \n";
+            foreach (ContextItem item in contextFiles)
+            {
+                context += $"{item.Name}```\n";
+                context += File.ReadAllText(item.FilePath) + "\n```\n";
+            }
+            if (contextFiles.Count == 0) context += "None.";
+
+            return context;
+        }
 
         private void AppendTextBlock(string text, bool isUser)
         {
