@@ -9,7 +9,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Windows\Variables\DownArrow.png" />
+    <None Remove="Windows\Variables\UpArrow.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="OllamaSharp" Version="5.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Windows\Variables\DownArrow.png" />
+    <Resource Include="Windows\Variables\UpArrow.png" />
   </ItemGroup>
 
 </Project>

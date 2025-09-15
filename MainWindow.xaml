@@ -20,7 +20,16 @@
         </Grid.ColumnDefinitions>
 
         <!-- Top Row -->
-        <TextBlock Text="Chat" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" Foreground="White"/>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="70*"/>
+            </Grid.RowDefinitions>
+            <Menu FontSize="10">
+                <MenuItem Header="Settings" x:Name="OpenSettings" Click="OpenSettings_Click" />
+            </Menu>
+            <TextBlock Text="Chat" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" Foreground="White"/>
+        </Grid>
 
         <!-- Middle Row -->
         <ScrollViewer Grid.Column="1" x:Name="ScrollDialog" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2" Margin="0,65,0,0" Grid.RowSpan="2" >

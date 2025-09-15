@@ -30,6 +30,8 @@ namespace CodingAssistantBox
         private List<string> chatHistory = new List<string>();
         private OllamaSharp.Models.Model? defaultModel = null;
 
+        public int numMessagesInChat = 5;
+
         public class ContextItem
         {
             public string Name { get; set; } = string.Empty;
@@ -116,7 +118,7 @@ namespace CodingAssistantBox
             await foreach (var answerToken in chat.SendAsync(context))
                 response += answerToken;
 
-            if (chatHistory.Count > 5)
+            if (chatHistory.Count > numMessagesInChat)
                 chatHistory.RemoveAt(0);
             chatHistory.Add("User: " + msg + "\nResponse: " + response + "\n");
 
@@ -231,6 +233,12 @@ namespace CodingAssistantBox
             Button btn = (Button)sender;
             ContextItem item = (ContextItem)btn.DataContext;
             contextFiles.Remove(item);
+        }
+
+        private void OpenSettings_Click(object sender, RoutedEventArgs e)
+        {
+            CodingAssistantBox.Windows.Variables.SettingsWindow settingWindow = new CodingAssistantBox.Windows.Variables.SettingsWindow();
+            settingWindow.ShowDialog();
         }
     }
 }
