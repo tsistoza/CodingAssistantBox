@@ -32,11 +32,11 @@ namespace CodingAssistantBox
         public class ContextItem
         {
             public string Name { get; set; } = string.Empty;
-            public string FileName { get; set; } = string.Empty;
+            public string FilePath { get; set; } = string.Empty;
             public ContextItem(string fileName)
             {
                 Name = System.IO.Path.GetFileName(fileName);
-                FileName = fileName;
+                FilePath = fileName;
             }
         }
 

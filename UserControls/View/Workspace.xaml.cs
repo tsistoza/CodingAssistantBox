@@ -28,7 +28,7 @@ namespace CodingAssistantBox.UserControls.View
         public class TreeViewParentItem
         {
             public string Name { get; set; } = string.Empty;
-            public string FileName { get; set; } = string.Empty;
+            public string FilePath { get; set; } = string.Empty;
             public ObservableCollection<TreeViewParentItem> Children { get; set; }
 
             public TreeViewParentItem(string filePath, bool isFile)
@@ -36,7 +36,7 @@ namespace CodingAssistantBox.UserControls.View
                 this.Children = new ObservableCollection<TreeViewParentItem>();
                 if (isFile) Name = System.IO.Path.GetFileName(filePath)!;
                 else Name = System.IO.Path.GetFileName(filePath)!;
-                FileName = filePath;
+                FilePath = filePath;
             }
         }
 
@@ -53,6 +53,16 @@ namespace CodingAssistantBox.UserControls.View
             DataContext = this;
             rootItems = new ObservableCollection<TreeViewParentItem>();
             InitializeComponent();
+        }
+
+        private void AddFileToContext(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuItem = (MenuItem)sender;
+            TreeViewParentItem item = (TreeViewParentItem)menuItem.DataContext;
+            string filePath = item.FilePath;
+            CodingAssistantBox.MainWindow.ContextItem contextItem = new CodingAssistantBox.MainWindow.ContextItem(filePath);
+            MainWindow parentWindow = (Window.GetWindow(this) as MainWindow)!;
+            parentWindow.ContextFiles.Add(contextItem);
         }
 
         private void fileBrowserBtn_Click(object sender, RoutedEventArgs e)

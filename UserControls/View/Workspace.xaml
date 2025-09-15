@@ -21,7 +21,14 @@
         <TreeView Grid.Row="2" Background="Transparent" ItemsSource="{Binding RootItems}" Grid.RowSpan="2">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}" >
-                    <TextBlock Text="{Binding Name}" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}" />
+                        <StackPanel.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Add To Context" Click="AddFileToContext" />
+                            </ContextMenu>
+                        </StackPanel.ContextMenu>
+                    </StackPanel>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
