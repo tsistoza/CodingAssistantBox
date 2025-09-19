@@ -48,7 +48,8 @@
                 </Grid.RowDefinitions>
                 <TextBlock x:Name="userPlaceholdler" Text="Model Connecting..." Margin="20, 10, 10, 10" VerticalAlignment="Center"
                            Foreground="LightGray" Panel.ZIndex="-1" />
-                <TextBox x:Name="userInput" Margin="10,0,10,0" Foreground="White" Background="Transparent"
+                <TextBox x:Name="userInput" Margin="10,0,10,0" Foreground="White" Background="Transparent" TextWrapping="Wrap"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                          TextChanged="userInput_TextChanged" CaretBrush="White" PreviewKeyDown="userInput_PreviewKeyDown"/>
 
                 <Grid Grid.Row="1" Margin="10, 0, 10, 0">
